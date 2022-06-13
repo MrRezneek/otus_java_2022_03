@@ -8,6 +8,10 @@ package ru.calculator;
 -XX:HeapDumpPath=./logs/heapdump.hprof
 -XX:+UseG1GC
 -Xlog:gc=debug:file=./logs/gc-%p-%t.log:tags,uptime,time,level:filecount=5,filesize=10m
+
+Оптимальный размер хипа
+До оптимизации -Xms1792m -Xmx1792m
+После оптимизации -Xms320m -Xmx320m
 */
 
 
