@@ -1,0 +1,12 @@
+Heap			        Время (до оптимизации)	    Время (после оптимизации)
+-Xms128m -Xmx128m	    OutOfMemoryError	        OutOfMemoryError
+-Xms160m -Xmx160m	    OutOfMemoryError	        msec:2330, sec:2
+-Xms256m -Xmx256m	    OutOfMemoryError	        msec:1457, sec:1
+-Xms320m -Xmx320m	    msec:7614, sec:7	        msec:865, sec:0
+-Xms512m -Xmx512m	    msec:5480, sec:5	        msec:984, sec:0
+-Xms768m -Xmx768m	    msec:4989, sec:4	        msec:920, sec:0
+-Xms1024m -Xmx1024m	    msec:4961, sec:4	        msec:986, sec:0
+-Xms1280m -Xmx1280m	    msec:4744, sec:4	        msec:970, sec:0
+-Xms1536m -Xmx1536m	    msec:4551, sec:4	        msec:977, sec:0
+-Xms1792m -Xmx1792m	    msec:3961, sec:3	        msec:982, sec:0
+-Xms2048m -Xmx2048m	    msec:4461, sec:4	        msec:1017, sec:1
