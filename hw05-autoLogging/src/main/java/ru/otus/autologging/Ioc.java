@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 class Ioc {
 
@@ -19,15 +21,24 @@ class Ioc {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final TestLogging myClass;
+        private final List<Method> annotatedMethods;
 
         DemoInvocationHandler(TestLogging myClass) {
             this.myClass = myClass;
+            annotatedMethods = new ArrayList<>();
+            var methods = myClass.getClass().getMethods();
+            for (Method method : methods) {
+                if (method.isAnnotationPresent(Log.class)) {
+                    annotatedMethods.add(method);
+                }
+            }
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             var classMethod = myClass.getClass().getMethod(method.getName(), method.getParameterTypes());
-            if (classMethod.isAnnotationPresent(Log.class)) {
+
+            if (annotatedMethods.contains(classMethod)) {
                 StringBuilder parameters = new StringBuilder();
                 Parameter[] methodParameters = method.getParameters();
                 for (int i = 0; i < args.length; i++) {
