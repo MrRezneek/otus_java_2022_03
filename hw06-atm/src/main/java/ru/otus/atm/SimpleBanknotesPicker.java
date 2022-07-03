@@ -29,6 +29,8 @@ public class SimpleBanknotesPicker implements BanknotePicker {
                 banknotesWithdrawalCount = Math.min(banknotesInCellCount, banknotesNeedCount);
                 banknotesWithdrawCountMap.put(nominal, banknotesWithdrawalCount);
                 amount -= nominal.getValue() * banknotesWithdrawalCount;
+            } else if (!nominalIterator.hasNext()) {
+                throw new IllegalArgumentException("Некорректная сумма. Доступные номиналы купюр " + banknotesCellMap.keySet());
             }
         }
 

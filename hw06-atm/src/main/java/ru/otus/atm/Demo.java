@@ -40,9 +40,11 @@ public class Demo {
         System.out.println(atm.getBanknotesCount());
         System.out.println();
 
-        System.out.println("Снятие:");
+
+        int amountWithdrawal = 230;
+        System.out.println("Снятие: " + amountWithdrawal);
         try {
-            var cash = atm.cashWithdrawal(1200); //3100, 150
+            var cash = atm.cashWithdrawal(amountWithdrawal); //3100, 150
             for (var banknote : cash) {
                 System.out.println(banknote.getNominal());
             }

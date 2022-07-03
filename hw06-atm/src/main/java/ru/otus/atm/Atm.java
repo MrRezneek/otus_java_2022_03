@@ -54,7 +54,7 @@ public class Atm {
     }
 
     public Map<Nominal, Integer> getBanknotesCount() {
-        HashMap<Nominal, Integer> banknotesCountMap = new HashMap<>();
+        TreeMap<Nominal, Integer> banknotesCountMap = new TreeMap<>(Comparator.comparingInt(Nominal::getValue));
         for (var banknoteCellEntry : banknotesCellMap.entrySet()) {
             banknotesCountMap.put(banknoteCellEntry.getKey(), banknoteCellEntry.getValue().getSize());
         }
