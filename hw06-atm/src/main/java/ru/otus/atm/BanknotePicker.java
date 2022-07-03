@@ -5,5 +5,5 @@ import java.util.Map;
 import java.util.Stack;
 
 public interface BanknotePicker {
-    List<Banknote> pick(int amount, Map<Nominal, Stack<Banknote>> banknotesCellMap);
+    List<Banknote> pick(int amount, Map<Nominal, BanknoteCell> banknotesCellMap);
 }

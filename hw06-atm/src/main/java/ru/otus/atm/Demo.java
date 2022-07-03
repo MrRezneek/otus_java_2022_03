@@ -4,10 +4,17 @@ import ru.otus.atm.exception.InsufficientBanknoteException;
 import ru.otus.atm.exception.InsufficientFundsException;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Demo {
     public static void main(String[] args) {
-        var atm = new Atm(new SimpleBanknotesPicker());
+
+        var atm = new Atm(
+                new HashSet<>(Arrays.asList(Nominal.values())),
+                new SimpleBanknotesPicker()
+        );
 
         System.out.println("Сумма наличных в банкомате: " + atm.getAtmBalance());
         System.out.println("Баланс счета: " + atm.getAccountBalance());
@@ -16,10 +23,7 @@ public class Demo {
         System.out.println("Пополнение:");
         var cashIn = Arrays.asList(
                 new Banknote(Nominal.THOUSAND),
-                new Banknote(Nominal.FIVE_HUNDRED),
-                new Banknote(Nominal.FIVE_HUNDRED),
-                new Banknote(Nominal.HUNDRED),
-                new Banknote(Nominal.FIVE_THOUSAND)
+                new Banknote(Nominal.TWO_HUNDRED)
         );
         for (var banknote : cashIn) {
             System.out.println(banknote.getNominal());
@@ -38,7 +42,7 @@ public class Demo {
 
         System.out.println("Снятие:");
         try {
-            var cash = atm.cashWithdrawal(1100); //3100, 150
+            var cash = atm.cashWithdrawal(1200); //3100, 150
             for (var banknote : cash) {
                 System.out.println(banknote.getNominal());
             }

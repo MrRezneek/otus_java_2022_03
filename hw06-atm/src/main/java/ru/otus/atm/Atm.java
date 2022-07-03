@@ -10,17 +10,14 @@ import static ru.otus.atm.Nominal.*;
 
 public class Atm {
 
-    private final Map<Nominal, Stack<Banknote>> banknotesCellMap = new TreeMap<>(Comparator.comparingInt(n -> -n.getValue()));
+    private final Map<Nominal, BanknoteCell> banknotesCellMap = new TreeMap<>(Comparator.comparingInt(n -> -n.getValue()));
     private final BanknotePicker banknotesPicker;
     private Account account = new Account("Ivanov Ivan", 11_000);
 
-    public Atm(BanknotePicker banknotesPicker) {
-        banknotesCellMap.put(HUNDRED, new Stack<>());
-        banknotesCellMap.put(TWO_HUNDRED, new Stack<>());
-        banknotesCellMap.put(FIVE_HUNDRED, new Stack<>());
-        banknotesCellMap.put(THOUSAND, new Stack<>());
-        banknotesCellMap.put(FIVE_THOUSAND, new Stack<>());
-
+    public Atm(Set<Nominal> nominals, BanknotePicker banknotesPicker) {
+        for (var nominal : nominals) {
+            banknotesCellMap.put(nominal, new BanknoteCell(nominal));
+        }
         this.banknotesPicker = banknotesPicker;
     }
 
@@ -51,7 +48,7 @@ public class Atm {
     public int getAtmBalance() {
         int sum = 0;
         for (var banknoteCellEntry : banknotesCellMap.entrySet()) {
-            sum += banknoteCellEntry.getKey().getValue() * banknoteCellEntry.getValue().size();
+            sum += banknoteCellEntry.getKey().getValue() * banknoteCellEntry.getValue().getSize();
         }
         return sum;
     }
@@ -59,7 +56,7 @@ public class Atm {
     public Map<Nominal, Integer> getBanknotesCount() {
         HashMap<Nominal, Integer> banknotesCountMap = new HashMap<>();
         for (var banknoteCellEntry : banknotesCellMap.entrySet()) {
-            banknotesCountMap.put(banknoteCellEntry.getKey(), banknoteCellEntry.getValue().size());
+            banknotesCountMap.put(banknoteCellEntry.getKey(), banknoteCellEntry.getValue().getSize());
         }
         return banknotesCountMap;
     }
@@ -71,12 +68,9 @@ public class Atm {
         if (amount > getAtmBalance()) {
             throw new InsufficientBanknoteException();
         }
-        if ((amount % 100) != 0) {
-            throw new IllegalArgumentException("Некорректная сумма. Доступные номиналы купюр " + banknotesCellMap.keySet());
-        }
     }
 
-    private void addToCell(Banknote banknote, Map<Nominal, Stack<Banknote>> banknoteCellMap) {
+    private void addToCell(Banknote banknote, Map<Nominal, BanknoteCell> banknoteCellMap) {
         var cell = banknoteCellMap.get(banknote.getNominal());
         if (cell == null)
             throw new IllegalBanknoteException();
