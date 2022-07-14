@@ -5,4 +5,8 @@ include 'hw03-reflection'
 include 'hw04-gc'
 include 'hw05-autoLogging'
 include 'hw07-patterns'
+include 'hw08-serialization'
+
+
+
 
