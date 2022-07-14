@@ -17,10 +17,14 @@ public class FileSerializer implements Serializer {
     }
 
     @Override
-    public void serialize(Map<String, Double> data) throws IOException {
+    public void serialize(Map<String, Double> data) {
         //формирует результирующий json и сохраняет его в файл
         File file = new File(fileName);
         mapper.addMixIn(Measurement.class, MeasurementMixIn.class);
-        mapper.writeValue(file, data);
+        try {
+            mapper.writeValue(file, data);
+        } catch (IOException e) {
+            throw new FileProcessException(e.getMessage());
+        }
     }
 }

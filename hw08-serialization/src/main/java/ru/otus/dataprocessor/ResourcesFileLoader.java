@@ -17,9 +17,13 @@ public class ResourcesFileLoader implements Loader {
     }
 
     @Override
-    public List<Measurement> load() throws IOException {
+    public List<Measurement> load() {
         //читает файл, парсит и возвращает результат
         mapper.addMixIn(Measurement.class, MeasurementMixIn.class);
-        return mapper.readValue(ClassLoader.getSystemResource(fileName), new TypeReference<List<Measurement>>() { });
+        try {
+            return mapper.readValue(ClassLoader.getSystemResource(fileName), new TypeReference<List<Measurement>>() { });
+        } catch (IOException e) {
+            throw new FileProcessException(e.getMessage());
+        }
     }
 }
